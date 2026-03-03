@@ -1,0 +1,23 @@
+{% extends 'anime/header.html' %}
+{% block title %} Anime Display {% endblock %}
+{% block css %} {% endblock %}
+{% block body %}
+<div class="container carousel-container">
+    <div id="demo" class="carousel slide" data-bs-ride="carousel">
+            {% for i in anime %}
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="/media/{{i.image}}" class="card-img-top" alt="Anime 1">
+                            <div class="card-body">
+                                <h5 class="card-title">{{i.product_name}}</h5>
+                                <p class="card-text">{{i.description}}</p>
+                                <a href="#" class="btn btn-primary">View More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {%endfor%}
+    </div>
+</div>
+{% endblock %}

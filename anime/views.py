@@ -1,11 +1,16 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from math import ceil
 from . models import Product
 
-def anime(request):
+def index(request):
     return render(request, 'anime/index.html')
 
 def product(request):
     products = Product.objects.all()
-    params = {'product' : products}
-    return render(request, 'anime/product.html', params)
+    n = len(products)
+    nSlides = n//3 + ceil((n/3) - (n//3))
+    params = {'anime' : products, 'no_of_slides' : nSlides, 'range' : range(1, nSlides)  }
+    return render(request, 'anime/anime.html', params)
+
+def demo(request):
+    return render(request, 'anime/demo.html')
