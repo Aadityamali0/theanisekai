@@ -1,16 +1,18 @@
 from django.shortcuts import render
 from math import ceil
-from . models import Product
+from .models import Product
 
 def index(request):
-    return render(request, 'anime/index.html')
+    allProds = []
+    catprods = Product.objects.values('category')
 
-def product(request):
-    products = Product.objects.all()
-    n = len(products)
-    nSlides = n//3 + ceil((n/3) - (n//3))
-    params = {'anime' : products, 'no_of_slides' : nSlides, 'range' : range(1, nSlides)  }
-    return render(request, 'anime/anime.html', params)
+    cats = {item['category'] for item in catprods}
 
-def demo(request):
-    return render(request, 'anime/demo.html')
+    for cat in cats:
+        prod = Product.objects.filter(category=cat)
+        n = len(prod)
+        nSlides = ceil(n/4)
+        allProds.append([prod, range(1, nSlides), nSlides])
+
+    params = {'allProds': allProds}
+    return render(request, 'anime/index.html', params)
